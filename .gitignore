@@ -2,3 +2,4 @@ custom_data/weights/darknet53.conv
 darknet
 custom_data/train.txt
 custom_data/test.txt
+custom_data/weights/darknet53.conv.74
