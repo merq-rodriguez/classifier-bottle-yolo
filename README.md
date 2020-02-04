@@ -89,8 +89,12 @@ Utilizamos los valores predeterminados para el entrenamiento.
 
 ### Entrenamiento YOLOv3
 
-> `./darknet detector train /path/to/snowman/darknet.data /path/to/snowman/darknet-yolov3.cfg ./darknet53.conv.74 > /path/to/snowman/train.log`
- 
+> `./darknet/darknet detector train custom_data/detector.data custom_data/cfg/yolov3.cfg custom_data/weights/darknet53.conv.74`
+
+### Optional:
+
+> `sh run.sh`
+
  ### Pruebas 
  
 > `./darknet detect cfg/yolov3.cfg yolov3.weights <imagen>`
