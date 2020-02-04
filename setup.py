@@ -14,7 +14,8 @@ def listDirectories(dir):
 def createFolder(path,name):
   try:
     if not os.path.exists(path+name) and  not os.path.isdir(path+name):
-      return os.mkdir(path+name)
+      os.mkdir(path+name)
+      return True
     else:
       return 'folder exist'
   except:
