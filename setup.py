@@ -20,8 +20,11 @@ def createFolder(path,name):
   except:
     print("[Error]: Folder not created")
 
-def downloadFile(url):
-  return wget.download(url)
+def downloadFile(url, output, fileName):
+  try:
+    return wget.download(url, out=output+"/"+fileName)
+  except:
+    print("Not download file: "+fileName)
 
 
 def createAllDiretories(PATH):
