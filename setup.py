@@ -130,9 +130,18 @@ def main():
       print("[-] Se creo el archivo text.txt correctamente.")
 
     weightsFolder = createFolder(PATH, "weights")
-    print(weightsFolder)
-    if weightsFolder == 'folder exist':
+    fileName="darknet53.conv.74"
+    PATH_WEIGHTS = PATH+"weights"
+
+    if weightsFolder == 'folder exist' or weightsFolder == True:
+      if not os.path.exists(PATH_WEIGHTS+"/"+fileName):
       print("[-] Descargando pesos preentrenados.")
-      downloadFile(URL_WEIGHTS)
+        downloadFile(
+          url=URL_WEIGHTS, 
+          output=PATH_WEIGHTS,
+          fileName=fileName
+        )
+      else:
+        print("[-] Los pesos ya existen.")
 
 main()
