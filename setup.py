@@ -1,9 +1,17 @@
 import os
 import wget
+import platform
 
 URL_IMAGES = ''
 URL_LABELS = ''
 URL_WEIGHTS = "https://pjreddie.com/media/files/darknet53.conv.74"
+
+#Version de sistema operativo
+def getSystem():
+  return platform.system()
+
+def join(path,folder):
+  return os.path.join(path, folder)
 
 def getPath():
   return os.getcwd()
@@ -13,8 +21,9 @@ def listDirectories(dir):
 
 def createFolder(path,name):
   try:
-    if not os.path.exists(path+name) and  not os.path.isdir(path+name):
-      os.mkdir(path+name)
+    route = join(path, name)
+    if not os.path.exists(route) and  not os.path.isdir(route):
+      os.mkdir(route)
       return True
     else:
       return 'folder exist'
@@ -23,7 +32,7 @@ def createFolder(path,name):
 
 def downloadFile(url, output, fileName):
   try:
-    return wget.download(url, out=output+"/"+fileName)
+    return wget.download(url, out=join(output,fileName))
   except:
     print("Not download file: "+fileName)
 
@@ -55,11 +64,11 @@ def createAllDiretories(PATH):
 def createTrainFile(imagesArray, dest, pathImages,fileName):
   try:
     i = 0
-    with open(dest+"/"+fileName, 'w') as file:
+    with open(join(dest,fileName), 'w') as file:
       for line in imagesArray:
         i = i + 1
         if i > 10:
-          file.write(pathImages+line+"\n")
+          file.write(join(pathImages, line)+"\n")
     return file
   except:
     print("[Error]: train file not created")
@@ -67,9 +76,9 @@ def createTrainFile(imagesArray, dest, pathImages,fileName):
 def createTestFile(imagesArray, dest, pathImages,fileName):
   try:
     i = 0
-    with open(dest+"/"+fileName, 'w') as file:
+    with open(join(dest, fileName), 'w') as file:
       for line in imagesArray:
-        file.write(pathImages+line+"\n")
+        file.write(join(pathImages, line)+"\n")
         i = i + 1
         if i > 11:
           break
@@ -84,9 +93,10 @@ def main():
   print("===========================================================")
   print("                        INICIANDO                          ")
   print("===========================================================")
-  PATH = getPath()+"/custom_data/";
-  imagesArray = listDirectories(PATH+"/images") #Listado de imagenes 
-  labelsArray = listDirectories(PATH+"/labels") #Listado de etiquetas
+  PATH = join(getPath(), "custom_data");
+  print("XD: "+join(PATH, "images"))
+  imagesArray = listDirectories(join(PATH, "images")) #Listado de imagenes 
+  labelsArray = listDirectories(join(PATH, "labels")) #Listado de etiquetas
   missingData = []
 
   # Verificamos que todas las imagenes tengan su archivo de etiquetado
@@ -112,7 +122,7 @@ def main():
     fileTrain = createTrainFile(
       imagesArray,
       dest=PATH,
-      pathImages=PATH+"/images/",
+      pathImages=join(PATH, "images"),
       fileName="train.txt"
     )
     
@@ -122,7 +132,7 @@ def main():
     fileTest = createTestFile(
       imagesArray,
       dest=PATH,
-      pathImages=PATH+"/images/",
+      pathImages=join(PATH, "images"),
       fileName="test.txt"
     )
 
@@ -131,10 +141,10 @@ def main():
 
     weightsFolder = createFolder(PATH, "weights")
     fileName="darknet53.conv.74"
-    PATH_WEIGHTS = PATH+"weights"
+    PATH_WEIGHTS = join(PATH, "weights")
 
     if weightsFolder == 'folder exist' or weightsFolder == True:
-      if not os.path.exists(PATH_WEIGHTS+"/"+fileName):
+      if not os.path.exists(join(PATH_WEIGHTS, fileName)):
         print("[-] Descargando pesos preentrenados.")
         downloadFile(
           url=URL_WEIGHTS, 
