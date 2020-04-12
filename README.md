@@ -87,9 +87,16 @@ Utilizamos los valores predeterminados para el entrenamiento.
 
 > filters = (classes +5)*3
 
-### Entrenamiento YOLOv3
+## Entrenamiento YOLOv3
+### Configuracion
+> `python setup.py`
 
-> `./darknet/darknet detector train custom_data/detector.data custom_data/cfg/yolov3.cfg custom_data/weights/darknet53.conv.74`
+### Clonar Darknet
+> `git clone https://github.com/pjreddie/darknet.git`
+> `make`
+
+# Entrenar
+> `./darknet detector train custom_data/detector.data custom_data/cfg/yolov3.cfg custom_data/weights/darknet53.conv.74`
 
 ### Optional:
 
